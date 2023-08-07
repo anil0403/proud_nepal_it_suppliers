@@ -34,6 +34,7 @@ export const authOptions: AuthOptions = {
             email: credentials.email,
           },
         });
+        console.log(`user = ${user?.hashedPassword}`)
 
         if (!user || !user.hashedPassword) {
           throw new Error("Email does not exist");
@@ -47,7 +48,6 @@ export const authOptions: AuthOptions = {
         if (!isCorrectPassword) {
           throw new Error("Incorrect password");
         }
-
         return user;
       },
     }),
