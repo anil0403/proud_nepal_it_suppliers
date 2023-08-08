@@ -14,11 +14,14 @@ model User {
   email          String?   @unique
   emailVerified  DateTime?
   hashedPassword String?
+  address        String?
+  billingAddress String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   sessions       Session[]
   accounts       Account[]
   favoriteIds    String[]  @db.ObjectId
+  cartIds        String[]  @db.ObjectId
   isAdmin        Boolean
 }
 
@@ -69,11 +72,16 @@ model Category {
 }
 
 model Product {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  brand    String
-  category Json
-  features String[] @db.ObjectId
-  price    String
-  tags     String[] @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  brand     String
+  category  String[]
+  features  String[]
+  price     String
+  discount  Float
+  thumbnail String
+  Images    String[]
+  tags      String[]
+  rating    Int?
+  comment   String?
 }
