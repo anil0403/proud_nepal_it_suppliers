@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import useBrands from "@/hooks/useBrands";
+import useCategories from "@/hooks/useCategories";
 
-interface BrandProps {
+interface CategoryProps {
   item: any;
   sn: number;
 }
-const Brand: React.FC<BrandProps> = ({ item, sn }) => {
-  const { mutate } = useBrands();
+const Brand: React.FC<CategoryProps> = ({ item, sn }) => {
+  const { mutate } = useCategories();
+
   const [active, setActive] = useState(false);
   const [name, setName] = useState(item.name);
 
@@ -15,36 +17,40 @@ const Brand: React.FC<BrandProps> = ({ item, sn }) => {
     setActive((prev) => !prev);
   }, []);
 
-  // delete brand
-  const deleteBrandHandler = useCallback(async (id: any) => {
+  // delete category
+  const deleteCategoryHandler = useCallback(async (id: any) => {
     try {
-      const deletedBrand = await axios.post("api/brand/removeBrand", {
+      const deletedCategory = await axios.post("api/category/removeCategory", {
         id: id,
       });
-      console.log(deletedBrand);
+      console.log(deletedCategory);
       mutate();
     } catch (error) {
       console.log(error);
     }
   }, []);
 
-  // update brand
-  const updateBrandHandler = useCallback(
+  // update category
+  const updateCategoryHandler = useCallback(
     async (id: any) => {
       try {
-        const updatedBrand = await axios.post("api/brand/updateBrand", {
-          id: id,
-          name: name,
-        });
+        const updatedCategory = await axios.post(
+          "api/category/updateCategory",
+          {
+            id: id,
+            name: name,
+          }
+        );
         mutate();
         activeHandler();
+        console.log(updatedCategory);
       } catch (error) {
         console.log(error);
       }
     },
     [name]
   );
-  // update brand
+  
   return (
     <tr className="transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-md">
       <td className="py-2 px-4 border">{sn + 1}</td>
@@ -59,7 +65,9 @@ const Brand: React.FC<BrandProps> = ({ item, sn }) => {
       </td>
       <td className="py-2 px-4 border flex flex-row gap-5 justify-center">
         <button
-          onClick={active ? () => updateBrandHandler(item.id) : activeHandler}
+          onClick={
+            active ? () => updateCategoryHandler(item.id) : activeHandler
+          }
           className={` ${
             !active ? "bg-yellow-600" : "bg-green-600"
           }    px-5 py-1 rounded-lg text-white font-semibold  ${
@@ -69,7 +77,7 @@ const Brand: React.FC<BrandProps> = ({ item, sn }) => {
           {!active ? "Edit" : "Modify"}
         </button>
         <button
-          onClick={() => deleteBrandHandler(item.id)}
+          onClick={() => deleteCategoryHandler(item.id)}
           className="bg-red-600 px-5 py-1 rounded-lg text-white font-semibold hover:bg-red-500"
         >
           Delete

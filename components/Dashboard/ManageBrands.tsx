@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import useBrands from "@/hooks/useBrands";
-import Brand from "./Brand/Brand";
+import Brand from "./Table/Brand";
 import axios from "axios";
 
 const ManageBrands = () => {
@@ -45,12 +45,12 @@ const ManageBrands = () => {
       </div>
       <div className=" flex items-center justify-cente">
         <div className="w-full">
-          <h2 className="text-2xl mb-4">Brands</h2>
+          <h2 className="text-2xl mb-4 py-2 font-bold">Brands</h2>
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-200">
-                <th className="py-2 px-4 border">S.N</th>
-                <th className="py-2 px-4 border">Name</th>
+                <th className="py-2 px-4 border text-left">S.N</th>
+                <th className="py-2 px-4 border text-left">Name</th>
                 <th className="py-2 px-4 border">Action</th>
               </tr>
             </thead>

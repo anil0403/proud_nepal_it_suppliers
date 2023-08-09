@@ -9,7 +9,7 @@ export default async function handler(
     return res.status(405).end();
   }
   try {
-    const categories = await prismadb.brand.findMany();
+    const categories = await prismadb.category.findMany();
     if (!categories) {
       return res.status(422).json({ error: "No Categories Found" });
     }

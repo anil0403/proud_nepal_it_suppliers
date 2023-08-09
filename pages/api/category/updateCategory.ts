@@ -8,17 +8,20 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).end();
   }
-  const { name } = req.body;
+  const { id, name } = req.body;
   try {
-    const newCategory = await prismadb.category.create({
+    const updatedBrand = await prismadb.category.update({
+      where: {
+        id: id,
+      },
       data: {
         name: name,
       },
     });
-    if (!newCategory) {
-      return res.status(422).json({ error: "No Category Added" });
+    if (!updatedBrand) {
+      return res.status(422).json({ error: "No Category Updated" });
     }
-    return res.status(200).json(newCategory);
+    return res.status(200).json(updatedBrand);
   } catch (error) {
     return res.status(400).json({ error: `Something went wrong: ${error}` });
   }
