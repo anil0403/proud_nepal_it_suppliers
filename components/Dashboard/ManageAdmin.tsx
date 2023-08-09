@@ -4,7 +4,7 @@ import axios from "axios";
 import useAllAdmins from "@/hooks/useAllAdmins";
 
 const ManageAdmin = () => {
-  const { data: admins } = useAllAdmins();
+  const { data: admins, mutate } = useAllAdmins();
   const { data: user } = useCurrentUser();
   const [ChangePasswordToggle, setChangePasswordToggle] = useState(false);
   const [email, setEmail] = useState("");
@@ -31,6 +31,7 @@ const ManageAdmin = () => {
         console.log(user);
         setEmail("");
         setPassword("");
+        mutate();
       } catch (error) {
         console.log(error);
       }
@@ -45,6 +46,7 @@ const ManageAdmin = () => {
         id,
       });
       console.log(response);
+      mutate();
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +193,7 @@ const ManageAdmin = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {admins.map((admin: any, i: number) => (
+                {admins?.map((admin: any, i: number) => (
                   <tr
                     key={i + 1}
                     className="transition-colors duration-300 hover:bg-gray-100"

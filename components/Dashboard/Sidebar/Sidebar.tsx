@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
                     </li>
 
                     <li className="mb-2">
-                        <div onClick={() => { setActiveTab('add_categories') }} className="flex gap-2 items-center text-blue-300 hover:text-blue-500 transition-all duration-300 cursor-pointer">
+                        <div onClick={() => { setActiveTab('manage_categories') }} className="flex gap-2 items-center text-blue-300 hover:text-blue-500 transition-all duration-300 cursor-pointer">
                             <BiSolidCategoryAlt size={20} />
                             Manage Categories
                         </div>
