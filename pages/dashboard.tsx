@@ -9,21 +9,22 @@ import { RiAdminFill } from "react-icons/ri";
 import ManageAdmin from "@/components/Dashboard/ManageAdmin";
 import ManageBrands from "@/components/Dashboard/ManageBrands";
 import ManageCategories from "@/components/Dashboard/ManageCategories";
+import ManageProduct from "@/components/Dashboard/ManageProduct";
 
-// export async function getServerSideProps(context: NextPageContext) {
-//   const session = await getSession(context);
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "/admin",
-//         permanent: false,
-//       },
-//     };
-//   }
-//   return {
-//     props: {},
-//   };
-// }
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/admin",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}
 
 const dashboard = () => {
   const { data: user } = useCurrentUser();
@@ -55,10 +56,12 @@ const dashboard = () => {
       </div>
       <div className="flex">
         <Sidebar setActiveTab={setActiveTab} />
-        <main className="flex-1 p-8 border-t-gray-800 border-t-2">
+        <main className="flex-1 p-8 border-t-gray-800 border-t-2 max-h-[90vh] overflow-y-auto">
           {activeTab === "manage_admins" && <ManageAdmin />}
           {activeTab === "manage_brands" && <ManageBrands />}
           {activeTab === "manage_categories" && <ManageCategories />}
+          {activeTab === "manage_products" && <ManageProduct />}
+          {/* {activeTab === "manage_categories" && <ManageCategories />} */}
         </main>
       </div>
     </>
