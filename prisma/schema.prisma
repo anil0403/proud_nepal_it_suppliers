@@ -62,26 +62,43 @@ model VerificationToken {
 }
 
 model Brand {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  products Product[]
 }
 
 model Category {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id            String              @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  products      Product[] // This field is used to create the reverse relation
+  productToCats ProductToCategory[]
 }
 
 model Product {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  brand     String
-  category  String[]
-  features  String[]
-  price     String
-  discount  Float
-  thumbnail String
-  Images    String[]
-  tags      String[]
-  rating    Int?
-  comment   String?
+  id            String              @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  features      String[]
+  price         String
+  discount      Float
+  thumbnail     String
+  Images        String[]
+  tags          String[]
+  rating        Int?
+  comment       String?
+  brand         Brand?              @relation(fields: [brandId], references: [id])
+  brandId       String?             @map("_brandId") @db.ObjectId
+  productToCats ProductToCategory[]
+  Category      Category?           @relation(fields: [categoryId], references: [id])
+  categoryId    String?             @db.ObjectId
+}
+
+model ProductToCategory {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId  String   @db.ObjectId
+  categoryId String   @db.ObjectId
+  product    Product  @relation(fields: [productId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@index([productId])
+  @@index([categoryId])
 }
